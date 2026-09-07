@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>隱私權政策 (Privacy Policy) | AgentFund AI - 台股智投 Pro</title>
+    <title data-title-zh="隱私權政策 (Privacy Policy) | AgentFund AI - 台股智投 Pro" data-title-en="Privacy Policy | AgentFund AI Pro">隱私權政策 (Privacy Policy) | AgentFund AI - 台股智投 Pro</title>
     <style>
         :root {
             --bg-color: #0A0D14;
@@ -12,6 +12,8 @@
             --text-primary: #FFFFFF;
             --text-secondary: #94A3B8;
             --gold-primary: #FBBF24;
+            --gold-glow: rgba(251, 191, 36, 0.25);
+            --blue-accent: #3B82F6;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -22,16 +24,63 @@
         }
         .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         
+        /* Language Visibility */
+        body:not([data-lang="en"]) .lang-en { display: none !important; }
+        body[data-lang="en"] .lang-zh { display: none !important; }
+
+        /* Navigation */
         nav {
             padding: 24px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--card-border);
+            flex-wrap: wrap;
+            gap: 16px;
         }
         .logo { font-size: 20px; font-weight: 800; color: var(--text-primary); text-decoration: none; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 20px; font-size: 14px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s; }
         .nav-links a:hover { color: var(--text-primary); }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2px 4px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover { color: var(--text-primary); }
+        .lang-btn.active {
+            background: var(--gold-primary);
+            color: #0A0D14;
+            font-weight: 700;
+        }
+        .lang-sep { color: var(--card-border); font-size: 11px; user-select: none; }
 
         .content {
             padding: 40px 0 60px;
@@ -50,48 +99,144 @@
             color: var(--text-secondary);
             font-size: 13px;
         }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 26px; }
+            nav { flex-direction: column; align-items: flex-start; }
+            .nav-right { width: 100%; justify-content: space-between; }
+        }
     </style>
+    <script>
+        function setLanguage(lang) {
+            if (lang !== 'zh' && lang !== 'en') lang = 'zh';
+            document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+            document.body.setAttribute('data-lang', lang);
+            try {
+                localStorage.setItem('agentfund_lang', lang);
+            } catch (e) {}
+
+            document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                if (btn.getAttribute('data-lang-target') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            var titleEl = document.querySelector('title[data-title-zh]');
+            if (titleEl) {
+                document.title = lang === 'zh' ? titleEl.getAttribute('data-title-zh') : titleEl.getAttribute('data-title-en');
+            }
+        }
+
+        (function() {
+            var savedLang = null;
+            try {
+                savedLang = localStorage.getItem('agentfund_lang');
+            } catch (e) {}
+            var defaultLang = savedLang || ((navigator.language && navigator.language.toLowerCase().startsWith('zh')) ? 'zh' : 'en');
+            document.documentElement.lang = defaultLang === 'zh' ? 'zh-TW' : 'en';
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                setLanguage(defaultLang);
+            });
+        })();
+    </script>
 </head>
 <body>
     <div class="container">
         <nav>
             <a href="index.html" class="logo">👑 AgentFund AI</a>
-            <div class="nav-links">
-                <a href="index.html">首頁</a>
-                <a href="support.html">技術支援</a>
-                <a href="terms.html">服務條款</a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html">
+                        <span class="lang-zh">首頁</span>
+                        <span class="lang-en">Home</span>
+                    </a>
+                    <a href="support.html">
+                        <span class="lang-zh">技術支援</span>
+                        <span class="lang-en">Support</span>
+                    </a>
+                    <a href="terms.html">
+                        <span class="lang-zh">服務條款</span>
+                        <span class="lang-en">Terms</span>
+                    </a>
+                </div>
+                <div class="lang-switch" role="group" aria-label="Language Selector">
+                    <button type="button" class="lang-btn active" data-lang-target="zh" onclick="setLanguage('zh')">中文</button>
+                    <span class="lang-sep">/</span>
+                    <button type="button" class="lang-btn" data-lang-target="en" onclick="setLanguage('en')">EN</button>
+                </div>
             </div>
         </nav>
 
         <div class="content">
-            <h1>隱私權政策 (Privacy Policy)</h1>
-            <div class="effective-date">最後更新日期：2026 年 8 月 31 日</div>
+            <h1>
+                <span class="lang-zh">隱私權政策 (Privacy Policy)</span>
+                <span class="lang-en">Privacy Policy</span>
+            </h1>
+            <div class="effective-date">
+                <span class="lang-zh">最後更新日期：2026 年 8 月 31 日</span>
+                <span class="lang-en">Last Updated: August 31, 2026</span>
+            </div>
 
-            <p>歡迎使用「台股智投 Pro / AgentFund AI」（以下簡稱「本應用程式」）。我們極度重視使用者的個人資料隱私與安全性。本隱私權政策旨在說明我們如何處理您在使用本應用程式時的資訊。</p>
+            <p class="lang-zh">歡迎使用「台股智投 Pro / AgentFund AI」（以下簡稱「本應用程式」）。我們極度重視使用者的個人資料隱私與安全性。本隱私權政策旨在說明我們如何處理您在使用本應用程式時的資訊。</p>
+            <p class="lang-en">Welcome to AgentFund AI Pro ("the Application"). We value your privacy and security. This Privacy Policy outlines how your information is handled when using our application and related services.</p>
 
-            <h2>1. 資料本機儲存與隱私原則</h2>
-            <p>本應用程式堅持「使用者隱私優先」原則：</p>
+            <h2>
+                <span class="lang-zh">1. 資料本機儲存與隱私原則</span>
+                <span class="lang-en">1. Local Data Storage & Privacy Principles</span>
+            </h2>
+            <p class="lang-zh">本應用程式堅持「使用者隱私優先」原則：</p>
+            <p class="lang-en">The Application adheres strictly to a "Privacy-First" architecture:</p>
             <ul>
-                <li><strong>自選股與持股記錄</strong>：您所輸入的自選股清單、持股部位與投資偏好均儲存於您的 iOS 裝置本機中，不會上傳至任何未經授權的第三方私人伺服器。</li>
-                <li><strong>API 金鑰安全</strong>：若您自行設定第三方 LLM 服務金鑰（如 OpenAI、Gemini），該金鑰將安全存儲於 iOS 本機沙盒中，僅在發送分析請求時透過加密 HTTPS 直接與官方 API 連線。</li>
+                <li>
+                    <strong class="lang-zh">自選股與持股記錄</strong>
+                    <strong class="lang-en">Watchlists & Portfolio Data</strong>: 
+                    <span class="lang-zh">您所輸入的自選股清單、持股部位與投資偏好均儲存於您的 iOS 裝置本機中，不會上傳至任何未經授權的第三方私人伺服器。</span>
+                    <span class="lang-en">All entered watchlists, stock portfolios, and user preferences are stored strictly on your local iOS device, never uploaded to private unauthorized external servers.</span>
+                </li>
+                <li>
+                    <strong class="lang-zh">API 金鑰安全</strong>
+                    <strong class="lang-en">API Key Security</strong>: 
+                    <span class="lang-zh">若您自行設定第三方 LLM 服務金鑰（如 OpenAI、Gemini），該金鑰將安全存儲於 iOS 本機沙盒中，僅在發送分析請求時透過加密 HTTPS 直接與官方 API 連線。</span>
+                    <span class="lang-en">If you provide optional third-party LLM API keys (e.g., OpenAI, Gemini), they are securely held in your local iOS sandbox storage and transmitted solely via direct encrypted HTTPS requests to official provider endpoints.</span>
+                </li>
             </ul>
 
-            <h2>2. 應用程式內購買與訂閱資訊</h2>
-            <p>所有應用程式內購買（包含月費方案與年費方案）均由 Apple App Store 官方 StoreKit 2 通道進行結算。我們不會、亦無法獲取或儲存您的信用卡卡號、帳單地址或任何個人支付敏感資料。</p>
+            <h2>
+                <span class="lang-zh">2. 應用程式內購買與訂閱資訊</span>
+                <span class="lang-en">2. In-App Purchases & Subscriptions</span>
+            </h2>
+            <p class="lang-zh">所有應用程式內購買（包含月費方案與年費方案）均由 Apple App Store 官方 StoreKit 2 通道進行結算。我們不會、亦無法獲取或儲存您的信用卡卡號、帳單地址或任何個人支付敏感資料。</p>
+            <p class="lang-en">All in-app purchases (including Monthly and Annual subscriptions) are processed directly by Apple App Store using StoreKit 2. We never collect, transmit, or store your credit card numbers, billing addresses, or payment credentials.</p>
 
-            <h2>3. 匿名分析與當機診斷</h2>
-            <p>為改善應用程式穩定性與使用者體驗，我們可能透過 Apple 官方提供之匿名診斷工具收集非識別性資料（例如 App 當機日誌、效能指標）。此類資料不包含任何可識別您個人身分的資訊。</p>
+            <h2>
+                <span class="lang-zh">3. 匿名分析與當機診斷</span>
+                <span class="lang-en">3. Anonymous Diagnostics & Crash Reports</span>
+            </h2>
+            <p class="lang-zh">為改善應用程式穩定性與使用者體驗，我們可能透過 Apple 官方提供之匿名診斷工具收集非識別性資料（例如 App 當機日誌、效能指標）。此類資料不包含任何可識別您個人身分的資訊。</p>
+            <p class="lang-en">To improve system stability and performance, we may receive anonymous crash logs and telemetry through Apple's official diagnostic systems. These reports contain zero personally identifiable data.</p>
 
-            <h2>4. 隱私權政策之修改</h2>
-            <p>我們保留隨時更新本隱私權政策的權利。重大變更將於本頁面公布並更新生效日期。</p>
+            <h2>
+                <span class="lang-zh">4. 隱私權政策之修改</span>
+                <span class="lang-en">4. Policy Amendments</span>
+            </h2>
+            <p class="lang-zh">我們保留隨時更新本隱私權政策的權利。重大變更將於本頁面公布並更新生效日期。</p>
+            <p class="lang-en">We reserve the right to modify this Privacy Policy at any time. Any material updates will be posted directly on this page with a revised effective date.</p>
 
-            <h2>5. 聯絡我們</h2>
-            <p>若您對本隱私權政策有任何疑問，歡迎隨時透過電子郵件與我們聯繫：<br>
+            <h2>
+                <span class="lang-zh">5. 聯絡我們</span>
+                <span class="lang-en">5. Contact Information</span>
+            </h2>
+            <p class="lang-zh">若您對本隱私權政策有任何疑問，歡迎隨時透過電子郵件與我們聯繫：<br>
             電子郵件：<strong>jklchen5362@gmail.com</strong></p>
+            <p class="lang-en">If you have any questions or inquiries regarding this Privacy Policy, please contact us at:<br>
+            Email: <strong>jklchen5362@gmail.com</strong></p>
         </div>
 
         <footer>
-            <p>© 2026 AgentFund AI. All rights reserved.</p>
+            <p>© 2026 AgentFund AI / Jeff Lin. All rights reserved.</p>
         </footer>
     </div>
 </body>

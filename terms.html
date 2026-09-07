@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服務條款與使用者協議 (Terms of Service / EULA) | AgentFund AI - 台股智投 Pro</title>
+    <title data-title-zh="服務條款與使用者協議 (Terms of Service / EULA) | AgentFund AI - 台股智投 Pro" data-title-en="Terms of Service & EULA | AgentFund AI Pro">服務條款與使用者協議 (Terms of Service / EULA) | AgentFund AI - 台股智投 Pro</title>
     <style>
         :root {
             --bg-color: #0A0D14;
@@ -12,6 +12,8 @@
             --text-primary: #FFFFFF;
             --text-secondary: #94A3B8;
             --gold-primary: #FBBF24;
+            --gold-glow: rgba(251, 191, 36, 0.25);
+            --blue-accent: #3B82F6;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -22,16 +24,63 @@
         }
         .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         
+        /* Language Visibility */
+        body:not([data-lang="en"]) .lang-en { display: none !important; }
+        body[data-lang="en"] .lang-zh { display: none !important; }
+
+        /* Navigation */
         nav {
             padding: 24px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--card-border);
+            flex-wrap: wrap;
+            gap: 16px;
         }
         .logo { font-size: 20px; font-weight: 800; color: var(--text-primary); text-decoration: none; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 20px; font-size: 14px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s; }
         .nav-links a:hover { color: var(--text-primary); }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2px 4px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover { color: var(--text-primary); }
+        .lang-btn.active {
+            background: var(--gold-primary);
+            color: #0A0D14;
+            font-weight: 700;
+        }
+        .lang-sep { color: var(--card-border); font-size: 11px; user-select: none; }
 
         .content { padding: 40px 0 60px; }
         h1 { font-size: 32px; margin-bottom: 8px; }
@@ -40,6 +89,8 @@
         p { color: var(--text-secondary); margin-bottom: 16px; font-size: 15px; }
         ul { margin-left: 24px; margin-bottom: 16px; color: var(--text-secondary); font-size: 15px; }
         li { margin-bottom: 8px; }
+        a.standard-eula { color: var(--blue-accent); text-decoration: none; font-weight: 600; }
+        a.standard-eula:hover { text-decoration: underline; }
 
         footer {
             padding: 40px 0;
@@ -48,40 +99,140 @@
             color: var(--text-secondary);
             font-size: 13px;
         }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 26px; }
+            nav { flex-direction: column; align-items: flex-start; }
+            .nav-right { width: 100%; justify-content: space-between; }
+        }
     </style>
+    <script>
+        function setLanguage(lang) {
+            if (lang !== 'zh' && lang !== 'en') lang = 'zh';
+            document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+            document.body.setAttribute('data-lang', lang);
+            try {
+                localStorage.setItem('agentfund_lang', lang);
+            } catch (e) {}
+
+            document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                if (btn.getAttribute('data-lang-target') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            var titleEl = document.querySelector('title[data-title-zh]');
+            if (titleEl) {
+                document.title = lang === 'zh' ? titleEl.getAttribute('data-title-zh') : titleEl.getAttribute('data-title-en');
+            }
+        }
+
+        (function() {
+            var savedLang = null;
+            try {
+                savedLang = localStorage.getItem('agentfund_lang');
+            } catch (e) {}
+            var defaultLang = savedLang || ((navigator.language && navigator.language.toLowerCase().startsWith('zh')) ? 'zh' : 'en');
+            document.documentElement.lang = defaultLang === 'zh' ? 'zh-TW' : 'en';
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                setLanguage(defaultLang);
+            });
+        })();
+    </script>
 </head>
 <body>
     <div class="container">
         <nav>
             <a href="index.html" class="logo">👑 AgentFund AI</a>
-            <div class="nav-links">
-                <a href="index.html">首頁</a>
-                <a href="support.html">技術支援</a>
-                <a href="privacy.html">隱私政策</a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html">
+                        <span class="lang-zh">首頁</span>
+                        <span class="lang-en">Home</span>
+                    </a>
+                    <a href="support.html">
+                        <span class="lang-zh">技術支援</span>
+                        <span class="lang-en">Support</span>
+                    </a>
+                    <a href="privacy.html">
+                        <span class="lang-zh">隱私政策</span>
+                        <span class="lang-en">Privacy</span>
+                    </a>
+                </div>
+                <div class="lang-switch" role="group" aria-label="Language Selector">
+                    <button type="button" class="lang-btn active" data-lang-target="zh" onclick="setLanguage('zh')">中文</button>
+                    <span class="lang-sep">/</span>
+                    <button type="button" class="lang-btn" data-lang-target="en" onclick="setLanguage('en')">EN</button>
+                </div>
             </div>
         </nav>
 
         <div class="content">
-            <h1>服務條款與使用者協議 (Terms of Service / EULA)</h1>
-            <div class="effective-date">最後更新日期：2026 年 8 月 31 日</div>
+            <h1>
+                <span class="lang-zh">服務條款與使用者協議 (Terms of Service / EULA)</span>
+                <span class="lang-en">Terms of Service & EULA</span>
+            </h1>
+            <div class="effective-date">
+                <span class="lang-zh">最後更新日期：2026 年 8 月 31 日</span>
+                <span class="lang-en">Last Updated: August 31, 2026</span>
+            </div>
 
-            <h2>1. 服務條款之接受</h2>
-            <p>歡迎下載並使用「台股智投 Pro / AgentFund AI」（以下簡稱「本軟體」）。當您安裝、使用或訂閱本軟體即代表您已閱讀、理解並同意遵守本服務條款及 Apple 標準使用者授權協議（EULA）。</p>
+            <h2>
+                <span class="lang-zh">1. 服務條款之接受</span>
+                <span class="lang-en">1. Acceptance of Terms</span>
+            </h2>
+            <p class="lang-zh">歡迎下載並使用「台股智投 Pro / AgentFund AI」（以下簡稱「本軟體」）。當您安裝、使用或訂閱本軟體即代表您已閱讀、理解並同意遵守本服務條款及 Apple 標準使用者授權協議（<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="standard-eula">Apple Standard EULA</a>）。</p>
+            <p class="lang-en">Welcome to AgentFund AI Pro ("the Software"). By downloading, installing, using, or subscribing to the Software, you agree to be bound by these Terms of Service and Apple's Standard Licensed Application End User License Agreement (<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" class="standard-eula">Apple Standard EULA</a>).</p>
 
-            <h2>2. 投資風險與絕對免責聲明</h2>
-            <p><strong>重要提示：</strong>本軟體所產生之所有 AI 分析報告、估值評估、信號與歷史回測數據均由演算法模型自動計算，僅供個人學術研究與決策輔助參考，<strong>絕不構成任何形式之證券投資建議、邀約或保證獲利承諾</strong>。</p>
-            <p>證券與金融商品交易具有高度市場波動風險，投資人應審慎評估自身財務狀況與風險承受度，所有投資決策均由使用者獨立判斷並<strong>自負盈虧</strong>，開發團隊概不承擔任何直接或間接之投資損益責任。</p>
+            <h2>
+                <span class="lang-zh">2. 投資風險與絕對免責聲明</span>
+                <span class="lang-en">2. Investment Risk & Strict Disclaimer</span>
+            </h2>
+            <p class="lang-zh"><strong>重要提示：</strong>本軟體所產生之所有 AI 分析報告、估值評估、信號與歷史回測數據均由演算法模型自動計算，僅供個人學術研究與決策輔助參考，<strong>絕不構成任何形式之證券投資建議、邀約或保證獲利承諾</strong>。</p>
+            <p class="lang-en"><strong>IMPORTANT NOTICE:</strong> All AI analytical reports, valuations, signals, and backtest results provided by the Software are algorithmically generated for educational research and personal reference only. They <strong>DO NOT constitute financial advice, an investment offer, or any guarantee of profits</strong>.</p>
+            <p class="lang-zh">證券與金融商品交易具有高度市場波動風險，投資人應審慎評估自身財務狀況與風險承受度，所有投資決策均由使用者獨立判斷並<strong>自負盈虧</strong>，開發團隊概不承擔任何直接或間接之投資損益責任。</p>
+            <p class="lang-en">Trading equities and financial instruments carries significant capital risk. Users must evaluate their personal financial status and risk capacity independently. All investment decisions are solely your own responsibility, and the development team assumes no liability for any trading losses.</p>
 
-            <h2>3. 訂閱、計費與自動續訂條款</h2>
+            <h2>
+                <span class="lang-zh">3. 訂閱、計費與自動續訂條款</span>
+                <span class="lang-en">3. Subscriptions, Billing & Auto-Renewal</span>
+            </h2>
             <ul>
-                <li><strong>扣款方式</strong>：訂閱款項將於確認購買時透過您的 Apple ID 帳戶扣款。</li>
-                <li><strong>免費試用</strong>：月費方案享有 7 天免費試用期。試用期結束時，若未主動取消，將自動轉為按月扣款之付費訂閱。</li>
-                <li><strong>自動續訂</strong>：訂閱將自動展期續訂，除非您在當前訂閱週期結束前至少 24 小時至 Apple ID 設定中關閉自動續訂功能。</li>
-                <li><strong>管理與取消</strong>：您可以隨時前往 iOS 系統「設定」 > 「Apple ID」 > 「訂閱項目」中管理或取消您的訂閱方案。</li>
+                <li>
+                    <strong class="lang-zh">扣款方式</strong>
+                    <strong class="lang-en">Payment Billing</strong>: 
+                    <span class="lang-zh">訂閱款項將於確認購買時透過您的 Apple ID 帳戶扣款。</span>
+                    <span class="lang-en">Subscription payments will be charged to your Apple ID Account at confirmation of purchase.</span>
+                </li>
+                <li>
+                    <strong class="lang-zh">免費試用</strong>
+                    <strong class="lang-en">Free Trial</strong>: 
+                    <span class="lang-zh">月費方案享有 7 天免費試用期。試用期結束時，若未主動取消，將自動轉為按月扣款之付費訂閱。</span>
+                    <span class="lang-en">The monthly plan comes with a 7-day free trial. If not canceled before the trial period ends, it automatically converts into a recurring paid subscription.</span>
+                </li>
+                <li>
+                    <strong class="lang-zh">自動續訂</strong>
+                    <strong class="lang-en">Auto-Renewal</strong>: 
+                    <span class="lang-zh">訂閱將自動展期續訂，除非您在當前訂閱週期結束前至少 24 小時至 Apple ID 設定中關閉自動續訂功能。</span>
+                    <span class="lang-en">Subscriptions renew automatically unless canceled at least 24 hours prior to the conclusion of the active subscription period.</span>
+                </li>
+                <li>
+                    <strong class="lang-zh">管理與取消</strong>
+                    <strong class="lang-en">Management & Cancellation</strong>: 
+                    <span class="lang-zh">您可以隨時前往 iOS 系統「設定」 > 「Apple ID」 > 「訂閱項目」中管理或取消您的訂閱方案。</span>
+                    <span class="lang-en">You can manage or cancel your subscriptions at any time via iOS Settings > Apple ID > Subscriptions.</span>
+                </li>
             </ul>
 
-            <h2>4. 智慧財產權</h2>
-            <p>本軟體之架構、外觀設計、文字內容、演算法程式碼與多代理模型專利均受著作權法與智慧財產權法保護。未經書面許可，嚴禁進行反向工程、反編譯或未授權之商業轉售。</p>
+            <h2>
+                <span class="lang-zh">4. 智慧財產權</span>
+                <span class="lang-en">4. Intellectual Property</span>
+            </h2>
+            <p class="lang-zh">本軟體之架構、外觀設計、文字內容、演算法程式碼與多代理模型專利均受著作權法與智慧財產權法保護。未經書面許可，嚴禁進行反向工程、反編譯或未授權之商業轉售。</p>
+            <p class="lang-en">The software architecture, UI layout, editorial content, and multi-agent algorithms are protected by intellectual property laws. Reverse engineering, decompiling, or unauthorized distribution is strictly prohibited.</p>
         </div>
 
         <footer>

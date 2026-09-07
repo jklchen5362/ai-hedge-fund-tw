@@ -1,157 +1,428 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技術支援與客戶服務 (Support) - 台股智投 Pro / AgentFund AI</title>
+    <title data-title-zh="技術支援與客戶服務 (Support) - 台股智投 Pro / AgentFund AI" data-title-en="Technical Support & FAQ - AgentFund AI Pro">技術支援與客戶服務 (Support) - 台股智投 Pro / AgentFund AI</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 24px;
-            background-color: #f8fafc;
+        :root {
+            --bg-color: #0A0D14;
+            --card-bg: #141923;
+            --card-border: #222938;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --gold-primary: #FBBF24;
+            --gold-glow: rgba(251, 191, 36, 0.25);
+            --blue-accent: #3B82F6;
         }
-        .container {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 36px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Language Visibility */
+        body:not([data-lang="en"]) .lang-en { display: none !important; }
+        body[data-lang="en"] .lang-zh { display: none !important; }
+
+        /* Navigation */
+        nav {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .logo-crown { color: var(--gold-primary); font-size: 24px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2px 4px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover { color: var(--text-primary); }
+        .lang-btn.active {
+            background: var(--gold-primary);
+            color: #0A0D14;
+            font-weight: 700;
+        }
+        .lang-sep { color: var(--card-border); font-size: 11px; user-select: none; }
+
+        .content { padding: 48px 0 60px; }
+        
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 16px;
         }
         h1 {
-            color: #0f172a;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 12px;
-            font-size: 26px;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-primary);
         }
-        h2 {
-            color: #1e293b;
-            margin-top: 28px;
-            font-size: 19px;
+        .badge {
+            background: rgba(251, 191, 36, 0.12);
+            color: var(--gold-primary);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
         }
-        p, li {
-            color: #475569;
-            font-size: 15px;
+        .intro-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
         }
+
+        /* Contact Card */
         .contact-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: #ffffff;
-            padding: 24px;
-            border-radius: 12px;
-            margin: 24px 0;
+            background: linear-gradient(135deg, #141923 0%, #1E2638 100%);
+            border: 1px solid var(--gold-primary);
+            box-shadow: 0 4px 20px var(--gold-glow);
+            border-radius: 16px;
+            padding: 32px;
             text-align: center;
+            margin-bottom: 48px;
         }
-        .contact-card h3 {
-            margin-top: 0;
-            color: #f8fafc;
-            font-size: 20px;
+        .contact-card h2 {
+            font-size: 22px;
+            color: #FFFFFF;
+            margin-bottom: 10px;
         }
         .contact-card p {
-            color: #cbd5e1;
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 8px;
         }
-        .contact-card a.btn {
-            display: inline-block;
-            background-color: #3b82f6;
-            color: #ffffff;
+        .email-highlight {
+            color: var(--gold-primary);
+            font-weight: 700;
+            font-size: 17px;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%);
+            color: #000;
             padding: 12px 28px;
-            border-radius: 8px;
+            border-radius: 24px;
+            font-weight: 700;
+            font-size: 15px;
             text-decoration: none;
-            font-weight: 600;
-            margin-top: 12px;
-            transition: background 0.2s;
+            margin-top: 16px;
+            box-shadow: 0 4px 15px var(--gold-glow);
+            transition: transform 0.2s;
         }
-        .contact-card a.btn:hover {
-            background-color: #2563eb;
+        .contact-btn:hover { transform: translateY(-2px); }
+
+        /* FAQ */
+        h2.section-heading {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 36px 0 20px;
+            color: var(--text-primary);
         }
         .faq-item {
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 12px;
-            background-color: #f8fafc;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: rgba(251, 191, 36, 0.35);
         }
         .faq-question {
             font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 6px;
+            font-size: 17px;
+            color: var(--gold-primary);
+            margin-bottom: 10px;
         }
-        .footer {
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Legal Links Box */
+        .legal-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
             margin-top: 40px;
             text-align: center;
-            font-size: 13px;
-            color: #94a3b8;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
         }
-        .badge {
-            background-color: #e0f2fe;
-            color: #0284c7;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .nav-links a {
-            color: #3b82f6;
+        .legal-box a {
+            color: var(--blue-accent);
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 12px;
             font-size: 14px;
+            transition: color 0.2s;
+        }
+        .legal-box a:hover { color: var(--text-primary); text-decoration: underline; }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--card-border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 26px; }
+            nav { flex-direction: column; align-items: flex-start; }
+            .nav-right { width: 100%; justify-content: space-between; }
         }
     </style>
+    <script>
+        function setLanguage(lang) {
+            if (lang !== 'zh' && lang !== 'en') lang = 'zh';
+            document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+            document.body.setAttribute('data-lang', lang);
+            try {
+                localStorage.setItem('agentfund_lang', lang);
+            } catch (e) {}
+
+            document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                if (btn.getAttribute('data-lang-target') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            var titleEl = document.querySelector('title[data-title-zh]');
+            if (titleEl) {
+                document.title = lang === 'zh' ? titleEl.getAttribute('data-title-zh') : titleEl.getAttribute('data-title-en');
+            }
+        }
+
+        (function() {
+            var savedLang = null;
+            try {
+                savedLang = localStorage.getItem('agentfund_lang');
+            } catch (e) {}
+            var defaultLang = savedLang || ((navigator.language && navigator.language.toLowerCase().startsWith('zh')) ? 'zh' : 'en');
+            document.documentElement.lang = defaultLang === 'zh' ? 'zh-TW' : 'en';
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                setLanguage(defaultLang);
+            });
+        })();
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>技術支援與客戶服務 (App Support) <span class="badge">台股智投 Pro v1.0.0</span></h1>
-        
-        <p>感謝您使用「台股智投 Pro」（AgentFund AI）。若您在下載、使用、訂閱或分析操作上有任何疑問或需要技術協助，我們隨時竭誠為您服務。</p>
+        <nav>
+            <a href="index.html" class="logo">
+                <span class="logo-crown">👑</span> AgentFund AI
+            </a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html">
+                        <span class="lang-zh">首頁</span>
+                        <span class="lang-en">Home</span>
+                    </a>
+                    <a href="index.html#features">
+                        <span class="lang-zh">功能特色</span>
+                        <span class="lang-en">Features</span>
+                    </a>
+                    <a href="index.html#pricing">
+                        <span class="lang-zh">方案定價</span>
+                        <span class="lang-en">Pricing</span>
+                    </a>
+                    <a href="privacy.html">
+                        <span class="lang-zh">隱私政策</span>
+                        <span class="lang-en">Privacy</span>
+                    </a>
+                    <a href="terms.html">
+                        <span class="lang-zh">服務條款</span>
+                        <span class="lang-en">Terms</span>
+                    </a>
+                </div>
+                <div class="lang-switch" role="group" aria-label="Language Selector">
+                    <button type="button" class="lang-btn active" data-lang-target="zh" onclick="setLanguage('zh')">中文</button>
+                    <span class="lang-sep">/</span>
+                    <button type="button" class="lang-btn" data-lang-target="en" onclick="setLanguage('en')">EN</button>
+                </div>
+            </div>
+        </nav>
 
-        <div class="contact-card">
-            <h3>聯絡技術支援團隊</h3>
-            <p>我們的工程團隊將在 24 小時內回覆您的來信。</p>
-            <p>官方支援電子信箱：<strong>jklchen5362@gmail.com</strong></p>
-            <a href="mailto:jklchen5362@gmail.com?subject=AgentFund%20AI%20App%20Support" class="btn">發送電子郵件聯繫我們</a>
+        <div class="content">
+            <div class="header-title-row">
+                <h1>
+                    <span class="lang-zh">技術支援與客戶服務 (Support)</span>
+                    <span class="lang-en">Technical Support & Customer Care</span>
+                </h1>
+                <span class="badge">台股智投 Pro v1.0.0</span>
+            </div>
+
+            <p class="intro-text lang-zh">感謝您使用「台股智投 Pro」（AgentFund AI）。若您在下載、使用、訂閱或分析操作上有任何疑問或需要技術協助，我們隨時竭誠為您服務。</p>
+            <p class="intro-text lang-en">Thank you for using AgentFund AI Pro. If you have any questions or require technical assistance regarding app installation, stock analysis, subscriptions, or feature usage, our team is here to help.</p>
+
+            <div class="contact-card">
+                <h2>
+                    <span class="lang-zh">聯絡技術支援團隊</span>
+                    <span class="lang-en">Contact Support Team</span>
+                </h2>
+                <p class="lang-zh">我們的工程團隊將在 24 小時內回覆您的來信。</p>
+                <p class="lang-en">Our engineering team typically responds within 24 hours.</p>
+                <p>
+                    <span class="lang-zh">官方支援電子信箱：</span>
+                    <span class="lang-en">Official Support Email: </span>
+                    <span class="email-highlight">jklchen5362@gmail.com</span>
+                </p>
+                <a href="mailto:jklchen5362@gmail.com?subject=AgentFund%20AI%20App%20Support" class="contact-btn">
+                    <span class="lang-zh">✉️ 發送電子郵件聯繫我們</span>
+                    <span class="lang-en">✉️ Send Email to Support</span>
+                </a>
+            </div>
+
+            <h2 class="section-heading">
+                <span class="lang-zh">常見問題與解答 (FAQ)</span>
+                <span class="lang-en">Frequently Asked Questions (FAQ)</span>
+            </h2>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="lang-zh">Q1: 如何開始使用 AI 評估股票？</span>
+                    <span class="lang-en">Q1: How do I begin AI stock analysis?</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="lang-zh">開啟 App「分析」首頁，在輸入框輸入台股 4 碼代號（如 2330 或 2330.TW）或美股代號（如 NVDA、AAPL），點擊「新增」後按下「開始評估」，系統即會在數秒內並行調用 AI 矩陣計算交易評級與多空分數。</p>
+                    <p class="lang-en">Open the "Analysis" tab in the App, enter a 4-digit TW stock ticker (e.g. 2330 or 2330.TW) or US ticker (e.g. NVDA, AAPL), tap "Add", and then tap "Run Multi-Agent Evaluation". The multi-agent AI matrix will compute ratings and sentiment scores in parallel within seconds.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="lang-zh">Q2: 如何恢復 Pro 會員購買 (Restore Purchases)？</span>
+                    <span class="lang-en">Q2: How do I restore my Pro subscription?</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="lang-zh">若您更換新裝置或重新安裝 App，請在 App 內點擊「升級 Pro」看板，並點擊下方「恢復購買」按鈕；或至「系統設定」>「恢復已購買權限」，系統將透過您的 Apple ID 自動恢復權益。</p>
+                    <p class="lang-en">If you switch devices or reinstall the app, tap "Upgrade to Pro" in the app and select "Restore Purchases" at the bottom, or navigate to "Settings" > "Restore Purchases". Your entitlement will be restored via your Apple ID.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="lang-zh">Q3: 如何管理或取消自動續訂訂閱？</span>
+                    <span class="lang-en">Q3: How do I manage or cancel auto-renewable subscriptions?</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="lang-zh">您可以隨時透過 iOS 裝置的「設定」>「頂部您的 Apple ID」>「訂閱項目」中找到「台股智投 Pro」，點選即可變更方案或取消訂閱。請注意需於目前計費週期結束前至少 24 小時前取消。</p>
+                    <p class="lang-en">You can manage or cancel your subscription anytime via iOS "Settings" > "[Your Apple ID]" > "Subscriptions" > "AgentFund AI Pro". Cancellations must be made at least 24 hours before the end of the current billing cycle.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="lang-zh">Q4: 年費方案是否支援家人共享？</span>
+                    <span class="lang-en">Q4: Does the Annual Plan support Apple Family Sharing?</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="lang-zh">是的，「台股智投 Pro 年費方案」支援 Apple 家人共享功能。您只需訂閱年費，即可與您「家人共享」群組中的最多 5 位家庭成員共同使用完整 Pro 功能。</p>
+                    <p class="lang-en">Yes! The AgentFund AI Pro Annual Plan supports Apple Family Sharing. A single subscription can be shared with up to 5 family members in your Family Sharing group.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="lang-zh">Q5: 數據分析是否需要額外付費設定 API Key？</span>
+                    <span class="lang-en">Q5: Do I need to provide external API keys or pay extra?</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="lang-zh">不需要！本 App 內建全套量化規則與本地端多代理人模型，無需提供任何 API 金鑰即可完整運算。若進階使用者想接入自己的 OpenAI 或 Gemini 模型，亦可於「系統設定」中自由輸入。</p>
+                    <p class="lang-en">No! The App includes a built-in quantitative rule engine and local multi-agent model that operates out of the box with zero setup. Advanced users who wish to connect their own OpenAI or Gemini API keys can optionally do so in App Settings.</p>
+                </div>
+            </div>
+
+            <div class="legal-box">
+                <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-primary);">
+                    <span class="lang-zh">相關法律條款與政策</span>
+                    <span class="lang-en">Related Terms & Policies</span>
+                </h3>
+                <a href="privacy.html">
+                    <span class="lang-zh">隱私權政策 (Privacy Policy)</span>
+                    <span class="lang-en">Privacy Policy</span>
+                </a> |
+                <a href="terms.html">
+                    <span class="lang-zh">使用條款 (Terms of Use / EULA)</span>
+                    <span class="lang-en">Terms of Use / EULA</span>
+                </a> |
+                <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank">
+                    <span class="lang-zh">Apple 官方標準 EULA</span>
+                    <span class="lang-en">Apple Standard EULA</span>
+                </a>
+            </div>
         </div>
 
-        <h2>常見問題與解答 (FAQ)</h2>
-        
-        <div class="faq-item">
-            <div class="faq-question">Q1: 如何開始使用 AI 評估股票？</div>
-            <div>A: 開啟 App「分析」首頁，在輸入框輸入台股 4 碼代號（如 2330 或 2330.TW）或美股代號（如 NVDA、AAPL），點擊「新增」後按下「開始評估」，系統即會在數秒內並行調用 AI 矩陣計算交易評級與多空分數。</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Q2: 如何恢復 Pro 會員購買 (Restore Purchases)？</div>
-            <div>A: 若您更換新裝置或重新安裝 App，請在 App 內點擊「升級 Pro」看板，並點擊下方「恢復購買」按鈕；或至「系統設定」>「恢復已購買權限」，系統將透過您的 Apple ID 自動恢復權益。</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Q3: 如何管理或取消自動續訂訂閱？</div>
-            <div>A: 您可以隨時透過 iOS 裝置的「設定」>「頂部您的 Apple ID」>「訂閱項目」中找到「台股智投 Pro」，點選即可變更方案或取消訂閱。請注意需於目前計費週期結束前至少 24 小時前取消。</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Q4: 年費方案是否支援家人共享？</div>
-            <div>A: 是的，「台股智投 Pro 年費方案」支援 Apple 家人共享功能。您只需訂閱年費，即可與您「家人共享」群組中的最多 5 位家庭成員共同使用完整 Pro 功能。</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Q5: 數據分析是否需要額外付費設定 API Key？</div>
-            <div>A: 不需要！本 App 內建全套量化規則與本地端多代理人模型，無需提供任何 API 金鑰即可完整運算。若進階使用者想接入自己的 OpenAI 或 Gemini 模型，亦可於「系統設定」中自由輸入。</div>
-        </div>
-
-        <h2>相關法律條款與政策</h2>
-        <p class="nav-links">
-            <a href="privacy.html">隱私權政策 (Privacy Policy)</a> |
-            <a href="terms-of-use.html">使用條款 (Terms of Use / EULA)</a> |
-            <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank">Apple 官方標準 EULA</a>
-        </p>
-
-        <div class="footer">
-            <p>官方聯絡信箱 (Contact Support)：<a href="mailto:jklchen5362@gmail.com" style="color: #3b82f6; text-decoration: none; font-weight: 600;">jklchen5362@gmail.com</a></p>
-            &copy; 2026 台股智投 Pro / AgentFund AI. Version 1.0.0. All rights reserved.
-        </div>
+        <footer>
+            <p>
+                <span class="lang-zh">官方聯絡信箱 (Contact Support)：</span>
+                <span class="lang-en">Official Support Email: </span>
+                <a href="mailto:jklchen5362@gmail.com" style="color: var(--blue-accent); text-decoration: none; font-weight: 600;">jklchen5362@gmail.com</a>
+            </p>
+            <p style="margin-top: 8px;">© 2026 AgentFund AI / Jeff Lin. All rights reserved.</p>
+        </footer>
     </div>
 </body>
 </html>

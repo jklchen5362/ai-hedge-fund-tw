@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentFund AI - 台股智投 Pro | 多 AI 代理人智慧量化決策系統</title>
+    <title data-title-zh="AgentFund AI - 台股智投 Pro | 多 AI 代理人智慧量化決策系統" data-title-en="AgentFund AI - Taiwan Stock Pro | Multi-AI Agent Quantitative Decision Engine">AgentFund AI - 台股智投 Pro | 多 AI 代理人智慧量化決策系統</title>
     <meta name="description" content="專為台股投資人打造的多 AI 代理人量化分析系統。整合 14 大 AI 分析師陣容、三大法人籌碼、Goodinfo 三維財報體質診斷與 7 大內在價值估值模型。">
     <style>
         :root {
@@ -25,6 +25,10 @@
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
         
+        /* Language Visibility */
+        body:not([data-lang="en"]) .lang-en { display: none !important; }
+        body[data-lang="en"] .lang-zh { display: none !important; }
+
         /* Navigation */
         nav {
             padding: 24px 0;
@@ -32,6 +36,8 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--card-border);
+            flex-wrap: wrap;
+            gap: 16px;
         }
         .logo {
             font-size: 22px;
@@ -43,14 +49,59 @@
             text-decoration: none;
         }
         .logo-crown { color: var(--gold-primary); font-size: 24px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            margin-left: 24px;
             font-size: 15px;
             transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--text-primary); }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2px 4px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover {
+            color: var(--text-primary);
+        }
+        .lang-btn.active {
+            background: var(--gold-primary);
+            color: #0A0D14;
+            font-weight: 700;
+        }
+        .lang-sep {
+            color: var(--card-border);
+            font-size: 11px;
+            user-select: none;
+        }
 
         /* Hero */
         .hero {
@@ -197,6 +248,7 @@
             justify-content: center;
             gap: 24px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         .footer-links a { color: var(--text-secondary); text-decoration: none; }
         .footer-links a:hover { color: var(--text-primary); }
@@ -204,8 +256,46 @@
         @media (max-width: 768px) {
             h1 { font-size: 34px; }
             .hero { padding: 50px 0 30px; }
+            nav { flex-direction: column; align-items: flex-start; }
+            .nav-right { width: 100%; justify-content: space-between; }
         }
     </style>
+    <script>
+        function setLanguage(lang) {
+            if (lang !== 'zh' && lang !== 'en') lang = 'zh';
+            document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+            document.body.setAttribute('data-lang', lang);
+            try {
+                localStorage.setItem('agentfund_lang', lang);
+            } catch (e) {}
+
+            document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                if (btn.getAttribute('data-lang-target') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            var titleEl = document.querySelector('title[data-title-zh]');
+            if (titleEl) {
+                document.title = lang === 'zh' ? titleEl.getAttribute('data-title-zh') : titleEl.getAttribute('data-title-en');
+            }
+        }
+
+        (function() {
+            var savedLang = null;
+            try {
+                savedLang = localStorage.getItem('agentfund_lang');
+            } catch (e) {}
+            var defaultLang = savedLang || ((navigator.language && navigator.language.toLowerCase().startsWith('zh')) ? 'zh' : 'en');
+            document.documentElement.lang = defaultLang === 'zh' ? 'zh-TW' : 'en';
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                setLanguage(defaultLang);
+            });
+        })();
+    </script>
 </head>
 <body>
     <div class="container">
@@ -213,129 +303,282 @@
             <a href="index.html" class="logo">
                 <span class="logo-crown">👑</span> AgentFund AI
             </a>
-            <div class="nav-links">
-                <a href="#features">功能特色</a>
-                <a href="#pricing">方案定價</a>
-                <a href="support.html">技術支援</a>
-                <a href="privacy.html">隱私政策</a>
-                <a href="terms.html">服務條款</a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#features">
+                        <span class="lang-zh">功能特色</span>
+                        <span class="lang-en">Features</span>
+                    </a>
+                    <a href="#guide">
+                        <span class="lang-zh">新手上路</span>
+                        <span class="lang-en">Quick Start</span>
+                    </a>
+                    <a href="#pricing">
+                        <span class="lang-zh">方案定價</span>
+                        <span class="lang-en">Pricing</span>
+                    </a>
+                    <a href="support.html">
+                        <span class="lang-zh">技術支援</span>
+                        <span class="lang-en">Support</span>
+                    </a>
+                    <a href="privacy.html">
+                        <span class="lang-zh">隱私政策</span>
+                        <span class="lang-en">Privacy</span>
+                    </a>
+                    <a href="terms.html">
+                        <span class="lang-zh">服務條款</span>
+                        <span class="lang-en">Terms</span>
+                    </a>
+                </div>
+                <div class="lang-switch" role="group" aria-label="Language Selector">
+                    <button type="button" class="lang-btn active" data-lang-target="zh" onclick="setLanguage('zh')">中文</button>
+                    <span class="lang-sep">/</span>
+                    <button type="button" class="lang-btn" data-lang-target="en" onclick="setLanguage('en')">EN</button>
+                </div>
             </div>
         </nav>
 
         <section class="hero">
-            <div class="badge">🚀 台股首創多 AI 代理人決策系統</div>
-            <h1>台股智投 Pro<br>解鎖頂級對沖基金分析算力</h1>
-            <p>融合 14 位風格迥異的 AI 分析師、7 大內在價值估值模型、三大法人籌碼分析與 Goodinfo 三維財報體質診斷，全方位輔助您的台股投資決策。</p>
-            <a href="#pricing" class="cta-btn">👑 開始 7 天免費試用</a>
+            <div class="badge">
+                <span class="lang-zh">🚀 台股首創多 AI 代理人決策系統</span>
+                <span class="lang-en">🚀 Taiwan's 1st Multi-AI Agent Decision Engine</span>
+            </div>
+            <h1>
+                <span class="lang-zh">台股智投 Pro<br>解鎖頂級對沖基金分析算力</span>
+                <span class="lang-en">AgentFund AI Pro<br>Hedge-Fund Grade Intelligence</span>
+            </h1>
+            <p class="lang-zh">融合 14 位風格迥異的 AI 分析師、7 大內在價值估值模型、三大法人籌碼分析與 Goodinfo 三維財報體質診斷，全方位輔助您的台股投資決策。</p>
+            <p class="lang-en">Empowering your Taiwan stock investing with 14 specialized AI analysts, 7 intrinsic valuation models, institutional flow tracking, and 3D fundamental health diagnosis.</p>
+            <a href="#pricing" class="cta-btn">
+                <span class="lang-zh">👑 開始 7 天免費試用</span>
+                <span class="lang-en">👑 Start 7-Day Free Trial</span>
+            </a>
         </section>
 
         <section id="features" class="features">
-            <h2 class="section-title">核心量化分析維度</h2>
+            <h2 class="section-title">
+                <span class="lang-zh">核心量化分析維度</span>
+                <span class="lang-en">Core Quantitative Dimensions</span>
+            </h2>
             <div class="grid">
                 <div class="card">
                     <div class="card-icon">🤖</div>
-                    <h3>14 大 AI 代理人矩陣</h3>
-                    <p>涵蓋趨勢動能、逆勢價值、籌碼跟單、嚴進風控與宏觀情緒，多視角綜合評估，杜絕單一指標盲點。</p>
+                    <h3>
+                        <span class="lang-zh">14 大 AI 代理人矩陣</span>
+                        <span class="lang-en">14 AI Agent Matrix</span>
+                    </h3>
+                    <p class="lang-zh">涵蓋趨勢動能、逆勢價值、籌碼跟單、嚴進風控與宏觀情緒，多視角綜合評估，杜絕單一指標盲點。</p>
+                    <p class="lang-en">Covering trend momentum, contrarian value, institutional tracking, strict risk management, and macro sentiment to eliminate single-indicator blind spots.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">💎</div>
-                    <h3>7 大估值與 6 維雪花圖</h3>
-                    <p>整合葛拉漢、DCF、巴菲特業主盈餘等估值法，雷達圖直觀評估價值、成長、獲利、健康、動能與籌碼。</p>
+                    <h3>
+                        <span class="lang-zh">7 大估值與 6 維雪花圖</span>
+                        <span class="lang-en">7 Valuation Models & 6D Snowflake</span>
+                    </h3>
+                    <p class="lang-zh">整合葛拉漢、DCF、巴菲特業主盈餘等估值法，雷達圖直觀評估價值、成長、獲利、健康、動能與籌碼。</p>
+                    <p class="lang-en">Integrating Graham, DCF, and Buffett Owner Earnings models with radar charts assessing Value, Growth, Profitability, Health, Momentum, and Institutional Flows.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">📊</div>
-                    <h3>三大法人籌碼深度追蹤</h3>
-                    <p>即時串接 TWSE / TPEx 外資、投信、自營商連買連賣數據，精確掌握主力資金動向與籌碼集中度。</p>
+                    <h3>
+                        <span class="lang-zh">三大法人籌碼深度追蹤</span>
+                        <span class="lang-en">Institutional Flow Tracking</span>
+                    </h3>
+                    <p class="lang-zh">即時串接 TWSE / TPEx 外資、投信、自營商連買連賣數據，精確掌握主力資金動向與籌碼集中度。</p>
+                    <p class="lang-en">Live TWSE/TPEx tracking for Foreign Investors, Investment Trusts, and Dealers with net buy/sell streaks and institutional concentration.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🛡️</div>
-                    <h3>Goodinfo 三維財報診斷</h3>
-                    <p>經營力、獲利力與財務健全度三層驗證，自動篩檢毛利率異常、高負債比與負現金流等地雷警戒。</p>
+                    <h3>
+                        <span class="lang-zh">Goodinfo 三維財報診斷</span>
+                        <span class="lang-en">Goodinfo 3D Financial Diagnosis</span>
+                    </h3>
+                    <p class="lang-zh">經營力、獲利力與財務健全度三層驗證，自動篩檢毛利率異常、高負債比與負現金流等地雷警戒。</p>
+                    <p class="lang-en">Triple-layer validation across Operational, Profitability, and Solvency health, flagging margin drops, high leverage, or negative cash flow.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">📈</div>
-                    <h3>策略回測與夏普比率</h3>
-                    <p>一鍵歷史回測交易策略，驗證累積報酬率、最大回撤（MDD）與勝率，用數據說話。</p>
+                    <h3>
+                        <span class="lang-zh">策略回測與夏普比率</span>
+                        <span class="lang-en">Strategy Backtesting & Sharpe Ratio</span>
+                    </h3>
+                    <p class="lang-zh">一鍵歷史回測交易策略，驗證累積報酬率、最大回撤（MDD）與勝率，用客觀數據說話。</p>
+                    <p class="lang-en">One-click historical strategy backtesting to verify cumulative return, maximum drawdown (MDD), and win rate with objective data.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🔒</div>
-                    <h3>本機安全與隱私第一</h3>
-                    <p>自選股清單、持股偏好與模型金鑰均儲存於本機端，不搜集個人敏感隱私數據。</p>
+                    <h3>
+                        <span class="lang-zh">本機安全與隱私第一</span>
+                        <span class="lang-en">Local Security & Privacy First</span>
+                    </h3>
+                    <p class="lang-zh">自選股清單、持股偏好與模型金鑰均儲存於本機端，不搜集個人敏感隱私數據。</p>
+                    <p class="lang-en">Watchlists, portfolio holdings, and optional custom API keys are stored securely on your local device without harvesting sensitive personal data.</p>
                 </div>
             </div>
         </section>
 
         <section id="guide" class="features" style="background: rgba(255,255,255,0.02); border-radius: 24px; padding: 48px 32px; margin: 40px 0;">
-            <h2 class="section-title">新手快速上手：6 大操作步驟</h2>
+            <h2 class="section-title">
+                <span class="lang-zh">新手快速上手：6 大操作步驟</span>
+                <span class="lang-en">Quick Start: 6 Simple Steps</span>
+            </h2>
             <div class="grid">
                 <div class="card">
-                    <h3 style="color: var(--gold-primary);">步驟 1. 新增自選股</h3>
-                    <p>在分析頁面輸入台股代碼（如 2330 或 2330.TW），免費版支援 5 支，Pro 會員解鎖 100 支深度監控。</p>
+                    <h3 style="color: var(--gold-primary);">
+                        <span class="lang-zh">步驟 1. 新增自選股</span>
+                        <span class="lang-en">Step 1. Add Ticker to Watchlist</span>
+                    </h3>
+                    <p class="lang-zh">在分析頁面輸入台股代碼（如 2330 或 2330.TW），免費版支援 5 支，Pro 會員解鎖 100 支深度監控。</p>
+                    <p class="lang-en">Enter a Taiwan stock ticker (e.g., 2330 or 2330.TW) in the Analysis tab. Free tier supports 5 stocks; Pro unlocks up to 100 tickers.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color: var(--gold-primary);">步驟 2. 設定回測區間</h3>
-                    <p>選擇歷史分析期間（預設半年），系統自動同步 TWSE/TPEx K 線與籌碼日報。</p>
+                    <h3 style="color: var(--gold-primary);">
+                        <span class="lang-zh">步驟 2. 設定回測區間</span>
+                        <span class="lang-en">Step 2. Set Backtest Window</span>
+                    </h3>
+                    <p class="lang-zh">選擇歷史分析期間（預設半年），系統自動同步 TWSE/TPEx K 線與籌碼日報。</p>
+                    <p class="lang-en">Select historical evaluation period (default: 6 months). The system automatically syncs TWSE/TPEx daily candles and institutional flow reports.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color: var(--gold-primary);">步驟 3. 配置 AI 團隊</h3>
-                    <p>點擊團隊配置，免費版啟用第 1 位基礎分析師，Pro 會員可同時啟用 14 大 AI 代理人陣容。</p>
+                    <h3 style="color: var(--gold-primary);">
+                        <span class="lang-zh">步驟 3. 配置 AI 團隊</span>
+                        <span class="lang-en">Step 3. Configure AI Team</span>
+                    </h3>
+                    <p class="lang-zh">點擊團隊配置，免費版啟用第 1 位基礎分析師，Pro 會員可同時啟用 14 大 AI 代理人陣容。</p>
+                    <p class="lang-en">Tap Team Config. Free tier activates the primary analyst; Pro unlocks all 14 specialized AI analysts simultaneously.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color: var(--gold-primary);">步驟 4. 啟動多代理評估</h3>
-                    <p>點擊「開始多代理評估」，14 位 AI 代理人平行進行量化診斷並即時輸出進度日誌。</p>
+                    <h3 style="color: var(--gold-primary);">
+                        <span class="lang-zh">步驟 4. 啟動多代理評估</span>
+                        <span class="lang-en">Step 4. Run Multi-Agent Analysis</span>
+                    </h3>
+                    <p class="lang-zh">點擊「開始多代理評估」，14 位 AI 代理人平行進行量化診斷並即時輸出進度日誌。</p>
+                    <p class="lang-en">Tap "Run Multi-Agent Evaluation" to execute parallel quantitative diagnostics with live computation logs.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color: var(--gold-primary);">步驟 5. 解讀投資經理決策</h3>
-                    <p>查看頂部綜合決策（買進/賣出/持有）、建議持股比率與風控經理安全警戒。</p>
+                    <h3 style="color: var(--gold-primary);">
+                        <span class="lang-zh">步驟 5. 解讀投資經理決策</span>
+                        <span class="lang-en">Step 5. Review CIO & CRO Consensus</span>
+                    </h3>
+                    <p class="lang-zh">查看頂部綜合決策（買進/賣出/持有）、建議持股比率與風控經理安全警戒。</p>
+                    <p class="lang-en">Review top-level consensus (Buy/Hold/Sell), recommended position sizing, and Chief Risk Officer guardrail alerts.</p>
                 </div>
                 <div class="card">
-                    <h3 style="color: var(--gold-primary);">步驟 6. 深入 7 大估值與財報</h3>
-                    <p>檢視 DCF、巴菲特業主盈餘、6 維雪花雷達圖與 Goodinfo 三維財報體質診斷。</p>
+                    <h3 style="color: var(--gold-primary);">
+                        <span class="lang-zh">步驟 6. 深入 7 大估值與財報</span>
+                        <span class="lang-en">Step 6. Explore Valuations & Financials</span>
+                    </h3>
+                    <p class="lang-zh">檢視 DCF、巴菲特業主盈餘、6 維雪花雷達圖與 Goodinfo 三維財報體質診斷。</p>
+                    <p class="lang-en">Inspect DCF, Buffett Owner Earnings, the 6D Snowflake radar chart, and Goodinfo 3D financial health metrics.</p>
                 </div>
             </div>
         </section>
 
         <section id="pricing" class="pricing">
-            <h2 class="section-title">選擇適合您的 Pro 方案</h2>
+            <h2 class="section-title">
+                <span class="lang-zh">選擇適合您的 Pro 方案</span>
+                <span class="lang-en">Choose Your Pro Plan</span>
+            </h2>
             <div class="pricing-grid">
                 <div class="price-card">
-                    <h3>月費方案</h3>
+                    <h3>
+                        <span class="lang-zh">月費方案</span>
+                        <span class="lang-en">Monthly Plan</span>
+                    </h3>
                     <div class="price-amount">NT$ 390</div>
-                    <div class="price-period">/ 每月 (含 7 天免費試用)</div>
+                    <div class="price-period">
+                        <span class="lang-zh">/ 每月 (含 7 天免費試用)</span>
+                        <span class="lang-en">/ month (Includes 7-day free trial)</span>
+                    </div>
                     <ul class="price-features">
-                        <li>完整 14 大 AI 分析師矩陣報告</li>
-                        <li>7 大內在價值估值模型</li>
-                        <li>Goodinfo 三維財報診斷</li>
-                        <li>三大法人籌碼連買追蹤</li>
-                        <li>自選股 100 支監控</li>
+                        <li>
+                            <span class="lang-zh">完整 14 大 AI 分析師矩陣報告</span>
+                            <span class="lang-en">Full 14 AI Analyst Matrix Reports</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">7 大內在價值估值模型</span>
+                            <span class="lang-en">7 Intrinsic Valuation Models</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">Goodinfo 三維財報診斷</span>
+                            <span class="lang-en">Goodinfo 3D Financial Health Diagnosis</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">三大法人籌碼連買追蹤</span>
+                            <span class="lang-en">Institutional Net Buy Streak Tracking</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">自選股 100 支深度監控</span>
+                            <span class="lang-en">Monitor up to 100 Watchlist Stocks</span>
+                        </li>
                     </ul>
-                    <a href="#" class="cta-btn" style="width: 100%; justify-content: center;">免費試用 7 天</a>
+                    <a href="#" class="cta-btn" style="width: 100%; justify-content: center;">
+                        <span class="lang-zh">免費試用 7 天</span>
+                        <span class="lang-en">Start 7-Day Free Trial</span>
+                    </a>
                 </div>
 
                 <div class="price-card featured">
-                    <div class="discount-pill">超值首選 • 省 29%</div>
-                    <h3>年費方案</h3>
+                    <div class="discount-pill">
+                        <span class="lang-zh">超值首選 • 省 29%</span>
+                        <span class="lang-en">Best Value • Save 29%</span>
+                    </div>
+                    <h3>
+                        <span class="lang-zh">年費方案</span>
+                        <span class="lang-en">Annual Plan</span>
+                    </h3>
                     <div class="price-amount">NT$ 3,490</div>
-                    <div class="price-period">/ 每年 (平均每月僅 $290)</div>
+                    <div class="price-period">
+                        <span class="lang-zh">/ 每年 (平均每月僅 $290)</span>
+                        <span class="lang-en">/ year (Only ~$290 / month)</span>
+                    </div>
                     <ul class="price-features">
-                        <li>包含月費方案所有功能</li>
-                        <li>享有年繳 29% 專屬特惠</li>
-                        <li>優先體驗最新 AI 分析模型</li>
-                        <li>支援 Apple 家人共享</li>
+                        <li>
+                            <span class="lang-zh">包含月費方案所有功能</span>
+                            <span class="lang-en">Includes all features of Monthly Plan</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">享有年繳 29% 專屬特惠</span>
+                            <span class="lang-en">Exclusive 29% annual discount savings</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">優先體驗最新 AI 分析模型</span>
+                            <span class="lang-en">Priority access to new AI models</span>
+                        </li>
+                        <li>
+                            <span class="lang-zh">支援 Apple 家人共享</span>
+                            <span class="lang-en">Apple Family Sharing supported</span>
+                        </li>
                     </ul>
-                    <a href="#" class="cta-btn" style="width: 100%; justify-content: center;">立即升級年費</a>
+                    <a href="#" class="cta-btn" style="width: 100%; justify-content: center;">
+                        <span class="lang-zh">立即升級年費</span>
+                        <span class="lang-en">Upgrade to Annual Plan</span>
+                    </a>
                 </div>
             </div>
         </section>
 
         <footer>
             <div class="footer-links">
-                <a href="support.html">技術支援 (Support)</a>
-                <a href="privacy.html">隱私權政策 (Privacy Policy)</a>
-                <a href="terms.html">服務條款 (Terms of Service)</a>
+                <a href="support.html">
+                    <span class="lang-zh">技術支援 (Support)</span>
+                    <span class="lang-en">Technical Support</span>
+                </a>
+                <a href="privacy.html">
+                    <span class="lang-zh">隱私權政策 (Privacy Policy)</span>
+                    <span class="lang-en">Privacy Policy</span>
+                </a>
+                <a href="terms.html">
+                    <span class="lang-zh">服務條款 (Terms of Service)</span>
+                    <span class="lang-en">Terms of Service</span>
+                </a>
             </div>
             <p>© 2026 AgentFund AI / Jeff Lin. All rights reserved.</p>
-            <p style="margin-top: 8px; font-size: 12px; color: #64748B;">免責聲明：本應用程式提供之所有 AI 分析與訊號僅供學術研究與個人決策輔助參考，不構成任何證券投資推薦或邀約。</p>
+            <p style="margin-top: 8px; font-size: 12px; color: #64748B;">
+                <span class="lang-zh">免責聲明：本應用程式提供之所有 AI 分析與訊號僅供學術研究與個人決策輔助參考，不構成任何證券投資推薦或邀約。</span>
+                <span class="lang-en">Disclaimer: All AI analysis and signals provided by this application are for academic research and personal reference only, and do not constitute investment advice or solicitation.</span>
+            </p>
         </footer>
     </div>
 </body>
